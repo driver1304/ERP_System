@@ -13,7 +13,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 
 @Embeddable
-public class EmployeeHoursBudgetForTaskKey implements Serializable {
+public class UserTaskHoursBudgetKey implements Serializable {
     @Column(name = "user_id")
     long userId;
 

@@ -9,10 +9,10 @@ import pl.fafrowicz.erpSystem.persistence.dao.UserRepository;
 import pl.fafrowicz.erpSystem.persistence.entity.Company;
 import pl.fafrowicz.erpSystem.persistence.entity.Role;
 import pl.fafrowicz.erpSystem.persistence.entity.User;
-import pl.fafrowicz.erpSystem.web.dto.UserDto;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,7 +20,7 @@ public class UserService {
 
     UserRepository userRepository;
     RoleRepository roleRepository;
-   CompanyService companyService;
+    CompanyService companyService;
     PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository, CompanyService companyService, PasswordEncoder passwordEncoder) {
@@ -30,31 +30,32 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerNewAdminAccount(UserDto accountDto) throws UserAlreadyExistException {
-        if (emailExist(accountDto.getEmail())) {
-            throw new UserAlreadyExistException("There is an account with that email address: " + accountDto.getEmail());
+
+    public User registerNewAdminAccount(User newAccount) throws UserAlreadyExistException {
+        if (emailExist(newAccount.getEmail())) {
+            throw new UserAlreadyExistException("There is an account with that email address: " + newAccount.getEmail());
         }
         final User user = new User();
-        user.setFirstName(accountDto.getFirstName());
-        user.setLastName(accountDto.getLastName());
-        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-        user.setEmail(accountDto.getEmail());
-        user.setCompany(companyService.registerNewCompany(accountDto.getCompany()));
+        user.setFirstName(newAccount.getFirstName());
+        user.setLastName(newAccount.getLastName());
+        user.setPassword(passwordEncoder.encode(newAccount.getPassword()));
+        user.setEmail(newAccount.getEmail());
+        user.setCompany(companyService.registerNewCompany(newAccount.getCompany()));
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_ADMIN")));
         return userRepository.save(user);
 
     }
 
 
-    public User registerNewEmployeeAcount(UserDto accountDto,Company company) throws UserAlreadyExistException {
-        if (emailExist(accountDto.getEmail())) {
-            throw new UserAlreadyExistException("There is an account with that email address: " + accountDto.getEmail());
+    public User registerNewEmployeeAcount(User newAccount, Company company) throws UserAlreadyExistException {
+        if (emailExist(newAccount.getEmail())) {
+            throw new UserAlreadyExistException("There is an account with that email address: " + newAccount.getEmail());
         }
         final User user = new User();
-        user.setFirstName(accountDto.getFirstName());
-        user.setLastName(accountDto.getLastName());
-        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-        user.setEmail(accountDto.getEmail());
+        user.setFirstName(newAccount.getFirstName());
+        user.setLastName(newAccount.getLastName());
+        user.setPassword(passwordEncoder.encode(newAccount.getPassword()));
+        user.setEmail(newAccount.getEmail());
         user.setCompany(company);
         user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
         return userRepository.save(user);
@@ -69,5 +70,23 @@ public class UserService {
         return userRepository.findAllEmployees(company, role);
     }
 
+    public Optional<User> findUserById(long userId) {
+        return userRepository.findById(userId);
+    }
 
+
+    public void deleteById(long userId) {
+        User user = userRepository.getOne(userId);
+        user.setCompany(null);
+        userRepository.save(user);
+        userRepository.deleteById(userId);
+    }
+
+    public void editEmployeeAccount(long userId, User userToEdit) {
+        User user = userRepository.getOne(userId);
+        user.setFirstName(userToEdit.getFirstName());
+        user.setLastName(userToEdit.getLastName());
+        user.setEmail(userToEdit.getEmail());
+        userRepository.save(user);
+    }
 }

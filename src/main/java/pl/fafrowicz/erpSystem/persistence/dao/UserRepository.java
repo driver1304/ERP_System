@@ -15,10 +15,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
 
     @Query("SELECT u FROM User u where u.company = ?1 and ?2 member of u.roles")
-    List<User> findAllEmployees (Company company, Role role);
+    List<User> findAllEmployees(Company company, Role role);
 
 
-    @Override
-    void delete(User user);
+    void deleteById(long userId);
+
+
 
 }

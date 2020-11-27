@@ -11,9 +11,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_task_hoursBudget")
-public class EmployeeHoursBudgetForTask {
+public class UserTaskHoursBudget {
     @EmbeddedId
-    EmployeeHoursBudgetForTaskKey id;
+    UserTaskHoursBudgetKey id;
 
     @ManyToOne
     @MapsId("userId")

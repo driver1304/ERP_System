@@ -19,7 +19,7 @@ public class Task {
     private String name;
 
     @OneToMany(mappedBy = "task", fetch = FetchType.EAGER)
-    Set<EmployeeHoursBudgetForTask> employeesAndHoursBudgetList;
+    Set<UserTaskHoursBudget> employeesAndHoursBudgetList;
 
     @OneToMany(mappedBy = "task", fetch = FetchType.EAGER)
     Set<DailyHoursReport> dailyHoursReportsList;

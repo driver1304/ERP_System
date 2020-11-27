@@ -13,12 +13,10 @@
 </head>
 
 <body style="background-color: #3e3e3e; color: white">
+<p>
+<h5>List of employee: </h5>
+</p>
 
-<h4>List of employee: </h4>
-
-<form method="get" action="/admin/employee/register">
-    <button class="btn" type="submit">Add employee</button>
-</form>
 
 <table border="1px">
     <tr>
@@ -33,18 +31,25 @@
         <td>${stat.count}</td>
         <td>${employee.firstName}</td>
         <td>${employee.lastName}</td>
-        <td><a href="http://localhost:8080/bookform/delete/${employee.id}">Delete</a>
-            <a href="http://localhost:8080/bookform/edit/${employee.id}">Edit</a></td>
+        <td><a href="http://localhost:8888/admin/employee/show/${employee.id}">Details</a>
+            <a href="http://localhost:8888/admin/employee/edit/${employee.id}">Edit</a>
+            <a href="http://localhost:8888/admin/employee/delete/${employee.id}">Delete</a></td>
     </tr>
 
     </c:forEach>
 
 </table>
-
+<p>
+<form method="get" action="/admin/employee/register">
+    <button class="btn" type="submit">Register new employee</button>
+</form>
+</p>
+<br>
+<p>
 <form method="get" action="/admin/homepage">
     <button class="btn btn-primary" type="submit">Homepage</button>
 </form>
-
+</p>
 
 </body>
 </html>

@@ -40,23 +40,7 @@
         <form:errors path="email" cssClass="validation"/>
     </p>
     <p>
-        <label for="company.name" class="sr-only">Company: </label>
-        <form:input type="text" class="form-control" maxlength="100" path="company.name" placeholder="Company name"
-                    required=""
-                    autofocus=""/>
-        <form:errors path="company.name" cssClass="validation"/>
-    </p>
-    <p>
-        <label for="password" class="sr-only">Password: </label>
-        <form:input type="password" class="form-control" path="password" placeholder="Password" required=""
-                    autofocus=""/>
-        <form:errors path="password" cssClass="validation"/>
-    </p>
-    <p>
-        <label for="matchingPassword" class="sr-only">Conform password: </label>
-        <form:input type="password" class="form-control" path="matchingPassword" placeholder="Confirm password"
-                    required="" autofocus=""/>
-        <form:errors path="matchingPassword" cssClass="validation"/>
+        <form:hidden path="password"/>
     </p>
 
 
@@ -64,7 +48,7 @@
         <h5 style="color: red; text-align:center">${message}</h5>
     </c:if>
     <p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Add new employee</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
     </p>
 
 </form:form>
