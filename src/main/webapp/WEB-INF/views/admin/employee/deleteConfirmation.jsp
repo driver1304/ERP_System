@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Homepage</title>
+    <title>Delete-employee</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
@@ -15,35 +15,17 @@
 </head>
 <body>
 
-<p>
-<h3 style="text-align:left">
-    <a style="color: lightgray" href="http://localhost:8080/admin/homepage"><security:authentication property="principal.company.name"/></a>
-</h3>
+<div style="text-align: center">
+    <h5 style="color: lightgray;">Are you sure you want to delete employee:
+        <span style="color: white"> ${employee.firstName} ${employee.lastName}?</span>
+    </h5></div>
 
 
-
-Hello, <security:authentication property="principal.firstName"/> <security:authentication property="principal.lastName"/>.</p>
-</p>
-<br>
-
-
-<form method="get" action="/admin/employee/">
-    <button style="display: inline;" class="btn" type="submit">Employees</button>
+<form style="text-align: center" method="post">
+    <input style="height: 35px; width: 80px; position: center" class="btn" type="submit" name="decision" value="yes"/>
+    <input style="height: 35px; width: 80px; position: center" class="btn btn-primary" type="submit" name="decision"
+           value="no"/>
 </form>
-<form method="get" action="/admin/task/">
-    <button style="display: inline;" class="btn" type="submit">Tasks</button>
-</form>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<form method="get" action="/perform_logout">
-    <button class="btn btn-primary" type="submit">Logout</button>
-</form>
-
 
 </body>
 </html>

@@ -19,6 +19,7 @@ import pl.fafrowicz.erpSystem.security.MyUserDetails;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/employee")
@@ -36,14 +37,11 @@ public class EmployeeController {
         this.userTaskHoursBudgetService = userTaskHoursBudgetService;
     }
 
-    @ModelAttribute("employees")
-    public Collection<User> employees(@AuthenticationPrincipal MyUserDetails user) {
-        List<User> employees = this.userService.findAllEmployees(user.getCompany(), roleRepository.findByName("ROLE_USER"));
-        return employees;
-    }
 
     @GetMapping("")
-    public String employeeList() {
+    public String employeeList(@AuthenticationPrincipal MyUserDetails user, Model model) {
+        List<User> employees = this.userService.findAllEmployees(user.getCompany());
+        model.addAttribute("employees", employees);
         return "admin/employee/listEmployee";
     }
 
@@ -67,7 +65,7 @@ public class EmployeeController {
         try {
             userService.registerNewEmployeeAcount(user, adminUser.getCompany());
         } catch (UserAlreadyExistException uaeEx) {
-            mav.addObject("message", "An account for that username/email already exists.");
+            mav.addObject("message", "An account for that email already exists.");
             return mav;
         } catch (final RuntimeException ex) {
             System.out.println(ex.getMessage());
@@ -78,10 +76,14 @@ public class EmployeeController {
     }
 
     @GetMapping("/show/{id}")
-    public String showDetails(@PathVariable long id, Model model) {
-        User user = userService.findUserById(id).get();
+    public String showDetails(@PathVariable long id, Model model, @AuthenticationPrincipal MyUserDetails adminUser) {
+        User user = userService.findUserByIdAndCompany(id, adminUser.getCompany()).get();
         List<Task> userActiveTasks = taskService.findAllActiveForUser(user);
         List<Task> userCompletedTasks = taskService.findAllCompletedForUser(user);
+
+        Map<Long, Short> hoursBudgetForUserForTask = userTaskHoursBudgetService.hoursBudgetPerTaskForUser(id);
+        model.addAttribute("hoursBudgetForUserForTask", hoursBudgetForUserForTask);
+
         model.addAttribute("userActiveTasks", userActiveTasks);
         model.addAttribute("userCompletedTasks", userCompletedTasks);
         model.addAttribute("employee", user);
@@ -89,29 +91,40 @@ public class EmployeeController {
     }
 
     @GetMapping("/delete/{userId}")
-    public String deleteUser(@PathVariable long userId) {
-        userService.deleteById(userId);
+    public String deleteUser(@PathVariable long userId, Model model, @AuthenticationPrincipal MyUserDetails adminUser) {
+        model.addAttribute("employee", userService.findUserByIdAndCompany(userId, adminUser.getCompany()).get());
+        return "admin/employee/deleteConfirmation";
+    }
+
+    @PostMapping("/delete/{userId}")
+    public String deleteUserPost(@PathVariable long userId, @RequestParam String decision, @AuthenticationPrincipal MyUserDetails adminUser) {
+        if ("yes".equals(decision)) {
+            userService.deleteById(userId, adminUser.getCompany());
+        }
         return "redirect:/admin/employee";
     }
 
 
     @GetMapping("/edit/{userId}")
-    public String showEditForm(@PathVariable long userId, final Model model) {
-        final User user = userService.findUserById(userId).get();
+    public String showEditForm(@PathVariable long userId, final Model model, @AuthenticationPrincipal MyUserDetails adminUser) {
+        final User user = userService.findUserByIdAndCompany(userId, adminUser.getCompany()).get();
         model.addAttribute("employee", user);
         return "admin/employee/editEmployee";
     }
 
     @PostMapping("/edit/{userId}")
-    public ModelAndView editEmployeeAccount(@PathVariable long userId, @ModelAttribute("employee") @Valid User userToEdit, BindingResult result) {
-        ModelAndView mav = new ModelAndView("admin/employee/employeeRegistration", "employee", userToEdit);
+    public ModelAndView editEmployeeAccount(@PathVariable long userId, @ModelAttribute("employee") @Valid User userToEdit, BindingResult result, @AuthenticationPrincipal MyUserDetails adminUser) {
+        ModelAndView mav = new ModelAndView("admin/employee/editEmployee", "employee", userToEdit);
 
         if (result.hasErrors()) {
             return mav;
         }
 
         try {
-            userService.editEmployeeAccount(userId, userToEdit);
+            userService.editEmployeeAccount(userId, userToEdit, adminUser.getCompany());
+        } catch (UserAlreadyExistException uaeEx) {
+            mav.addObject("message", "An account for that email already exists.");
+            return mav;
         } catch (final RuntimeException ex) {
             System.out.println(ex.getMessage());
             mav.addObject("message", "Operation failed.");
@@ -121,8 +134,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/task/delete/{userId}/{taskId}")
-    public String deleteEmployeeTask(@PathVariable long userId, @PathVariable long taskId) {
-        userTaskHoursBudgetService.delete(userId, taskId);
+    public String detachTask(@PathVariable long userId, @PathVariable long taskId, @AuthenticationPrincipal MyUserDetails adminUser) {
+        userTaskHoursBudgetService.delete(userId, taskId, adminUser.getCompany());
         return "redirect:/admin/employee/show/" + userId;
     }
 

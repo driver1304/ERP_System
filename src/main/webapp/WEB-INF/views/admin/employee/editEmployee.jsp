@@ -5,18 +5,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Employee-register</title>
-    <link href="/WEB-INF/css/myStyle.css" rel="stylesheet" type="text/css">
+    <title>Edit-employee</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
+
 
 </head>
-<body style="background-color: #3e3e3e; color: white">
+<body>
 
 
 <form:form class="form-signin" method="post" modelAttribute="employee">
-    <h2 class="form-signin-heading">Register new employee</h2>
+    <h3 style="text-align: center" class="form-signin-heading">Edit employee data</h3>
 
 
     <p>
@@ -48,7 +49,7 @@
         <h5 style="color: red; text-align:center">${message}</h5>
     </c:if>
     <p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Edit</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
     </p>
 
 </form:form>

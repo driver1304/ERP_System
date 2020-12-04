@@ -5,40 +5,49 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>List of employees</title>
+    <title>Details-employee</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="<c:url value="/WEB-INF/css/myStyle.css" />" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
+
+
 </head>
-
-<body style="background-color: #3e3e3e; color: white">
-
-
-<h5 style="color: lightgray">${employee.firstName} ${employee.lastName}</h5>
+<body>
+<h3 style="text-align:left">
+    <a style="color: lightgray" href="http://localhost:8080/admin/homepage"><security:authentication
+            property="principal.company.name"/></a>
+</h3>
+<p>
+<h5>${employee.firstName} ${employee.lastName}</h5>
 <h7>${employee.email}</h7>
-
+</p>
 <p>
 <table border="1px">
     <tr>
-        <th colspan="4" style="text-align:center">Active projects</th>
+        <th colspan="5" style="text-align:center; padding: 10px">Active projects</th>
     </tr>
     <tr>
         <th style="min-width:30px"> Lp.</th>
-        <th style="min-width:120px">Title</th>
-        <th style="min-width:120px">Deadline</th>
-        <th style="min-width:120px">Action</th>
+        <th style="min-width:300px">Title</th>
+        <th style="min-width:200px; text-align: center">Hours budget for task</th>
+        <th style="min-width:150px; text-align: center">Deadline</th>
+        <th style="min-width:150px; text-align: center">Action</th>
     </tr>
 
     <c:forEach items="${userActiveTasks}" var="task" varStatus="stat">
         <tr>
             <td>${stat.count}</td>
-            <td>${task.name}</td>
-            <td>${task.deadline}</td>
-            <td>
-                    <%--                <a href="http://localhost:8888/admin/employee/task/${employee.id}">Details</a>--%>
-                <a href="http://localhost:8888/admin/employee/${employee.id}">Edit</a>
-                <a href="http://localhost:8888/admin/employee/task/delete/${employee.id}/${task.id}">Delete</a></td>
+            <td><a style="color: white" href="http://localhost:8080/admin/task/show/${task.id}">
+                    ${task.name}</a></td>
+            <td style="text-align: center">
+                    ${hoursBudgetForUserForTask.get(task.id)}
+            </td>
+            <td style="text-align: center">${task.deadline}</td>
+
+            <td style="text-align: center">
+                <a href="http://localhost:8080/admin/employee/task/delete/${employee.id}/${task.id}">Detach</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
@@ -47,38 +56,41 @@
 <p>
 <table border="1px">
     <tr>
-        <th colspan="4" style="text-align:center">Completed projects</th>
+        <th colspan="5" style="text-align:center; padding: 10px">Completed projects</th>
     </tr>
     <tr>
         <th style="min-width:30px"> Lp.</th>
-        <th style="min-width:120px">Title</th>
-        <th style="min-width:120px">Deadline</th>
-        <th style="min-width:120px">Action</th>
+        <th style="min-width:300px">Title</th>
+        <th style="min-width:200px; text-align: center">Hours budget for task</th>
+        <th style="min-width:150px; text-align: center">Deadline</th>
+
     </tr>
 
     <c:forEach items="${userCompletedTasks}" var="task" varStatus="stat">
         <tr>
             <td>${stat.count}</td>
-            <td>${task.name}</td>
-            <td>${task.deadline}</td>
-            <td>
-                    <%--                <a href="http://localhost:8888/admin/employee/task/${employee.id}">Details</a>--%>
-                <a href="http://localhost:8080/bookform/delete/${employee.id}">Delete</a></td>
+            <td><a style="color: white" href="http://localhost:8080/admin/task/show/${task.id}">
+                    ${task.name}</a></td>
+            <td style="text-align: center">
+                    ${hoursBudgetForUserForTask.get(task.id)}
+            </td>
+            <td style="text-align: center">${task.deadline}</td>
         </tr>
     </c:forEach>
 </table>
 </p>
+<br>
+<br>
 
 <p>
 <form method="get" action="/admin/employee/">
     <button class="btn" type="submit">Back to list of Employees</button>
 </form>
 </p>
-<p>
-<form method="get" action="/admin/homepage">
-    <button class="btn btn-primary" type="submit">Homepage</button>
+
+<form method="get" action="/perform_logout">
+    <button class="btn btn-primary" type="submit">Logout</button>
 </form>
-</p>
 
 </body>
 </html>

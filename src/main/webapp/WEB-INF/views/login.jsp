@@ -9,23 +9,23 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="<c:url value="/WEB-INF/css/myStyle.css" />" rel="stylesheet">
-</head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
 
-<body style="background-color: #3e3e3e; color: white">
+
+</head>
+<body>
 <div class="container">
     <form class="form-signin" method="post" action="/perform_login">
         <h2 class="form-signin-heading" style="text-align:center">Login</h2>
 
         <p>
             <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required=""
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username"
                    autofocus="">
         </p>
         <p>
             <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password"
-                   required="">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
         </p>
         <p>
             <c:if test="${not empty param.error}">

@@ -7,12 +7,12 @@ import pl.fafrowicz.erpSystem.error.UserAlreadyExistException;
 import pl.fafrowicz.erpSystem.persistence.dao.RoleRepository;
 import pl.fafrowicz.erpSystem.persistence.dao.UserRepository;
 import pl.fafrowicz.erpSystem.persistence.entity.Company;
-import pl.fafrowicz.erpSystem.persistence.entity.Role;
 import pl.fafrowicz.erpSystem.persistence.entity.User;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -66,27 +66,55 @@ public class UserService {
     }
 
 
-    public List<User> findAllEmployees(Company company, Role role) {
-        return userRepository.findAllEmployees(company, role);
+    public List<User> findAllEmployees(Company company) {
+        return userRepository.findAllEmployees(company);
     }
 
-    public Optional<User> findUserById(long userId) {
+    public Optional<User> findUserByIdAndCompany(long userId, Company company) {
+        return userRepository.findByIdAndAndCompany(userId, company);
+    }
+
+    public Optional<User> findById(long userId) {
         return userRepository.findById(userId);
     }
 
-
-    public void deleteById(long userId) {
-        User user = userRepository.getOne(userId);
-        user.setCompany(null);
-        userRepository.save(user);
-        userRepository.deleteById(userId);
+    public void deleteById(long userId, Company company) {
+        Optional<User> optionalUser = userRepository.findByIdAndAndCompany(userId, company);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setCompany(null);
+            userRepository.save(user);
+            userRepository.deleteById(userId);
+        }
     }
 
-    public void editEmployeeAccount(long userId, User userToEdit) {
-        User user = userRepository.getOne(userId);
-        user.setFirstName(userToEdit.getFirstName());
-        user.setLastName(userToEdit.getLastName());
-        user.setEmail(userToEdit.getEmail());
-        userRepository.save(user);
+    public void editEmployeeAccount(long userId, User userToEdit, Company company) throws UserAlreadyExistException {
+        Optional<User> optionalUser = userRepository.findByIdAndAndCompany(userId, company);
+        if (optionalUser.isPresent()){
+            User user = optionalUser.get();
+            if (!user.getEmail().equals(userToEdit.getEmail())) {
+                if (emailExist(userToEdit.getEmail())) {
+                    throw new UserAlreadyExistException("There is an account with that email address: " + userToEdit.getEmail());
+                }
+            }
+            user.setFirstName(userToEdit.getFirstName());
+            user.setLastName(userToEdit.getLastName());
+            user.setEmail(userToEdit.getEmail());
+            userRepository.save(user);
+        }
+
+    }
+
+
+    public List<User> findAllForTask(long taskId, Company company) {
+        return userRepository.findAllByTaskAndCompany(taskId, company);
+    }
+
+    public List<User> findAllWithoutTask(long taskId, Company company) {
+        List<User> allEmployees = this.findAllEmployees(company);
+        List<User> allForTask = findAllForTask(taskId, company);
+        return allEmployees.stream()
+                .filter(u -> !allForTask.contains(u))
+                .collect(Collectors.toList());
     }
 }

@@ -5,21 +5,26 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pl.fafrowicz.erpSystem.persistence.entity.Company;
 import pl.fafrowicz.erpSystem.persistence.entity.Role;
+import pl.fafrowicz.erpSystem.persistence.entity.Task;
 import pl.fafrowicz.erpSystem.persistence.entity.User;
 
 import java.awt.print.Book;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByEmail(String email);
 
-    @Query("SELECT u FROM User u where u.company = ?1 and ?2 member of u.roles")
-    List<User> findAllEmployees(Company company, Role role);
+    @Query("SELECT u FROM User u join fetch  u.roles r where u.company = ?1 and r.name = 'ROLE_USER'")
+    List<User> findAllEmployees(Company company);
 
+
+    Optional<User> findByIdAndAndCompany(long id, Company company);
 
     void deleteById(long userId);
 
-
+    @Query("select u FROM User u JOIN FETCH u.hoursBudgetForTasksList hbft WHERE hbft.task.id = ?1 AND hbft.task.company= ?2")
+    List<User> findAllByTaskAndCompany(long taskId, Company company);
 
 }

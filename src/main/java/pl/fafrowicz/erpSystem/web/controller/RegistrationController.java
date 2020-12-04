@@ -15,6 +15,7 @@ import pl.fafrowicz.erpSystem.persistence.service.UserService;
 
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 @Controller
 public class RegistrationController {
@@ -27,7 +28,9 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String showRegistrationForm(final Model model) {
+        Company company = new Company();
         final User user = new User();
+        user.setCompany(company);
         model.addAttribute("user", user);
         return "registration";
     }
@@ -45,10 +48,12 @@ public class RegistrationController {
         try {
             userService.registerNewAdminAccount(user);
         } catch (UserAlreadyExistException uaeEx) {
-            mav.addObject("message", "An account for that username/email already exists.");
+            mav.addObject("message", "An account for that email already exists.");
             return mav;
-        } catch (
-                final RuntimeException ex) {
+        } catch (ValidationException vE) {
+            mav.addObject("messageCompany", "You must enter the company name.");
+            return mav;
+        } catch (final RuntimeException ex) {
             System.out.println(ex.getMessage());
             mav.addObject("message", "Registration failed.");
             return mav;

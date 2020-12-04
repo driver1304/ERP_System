@@ -9,47 +9,51 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="<c:url value="/WEB-INF/css/myStyle.css" />" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
+
+
 </head>
+<body>
+<h3 style="text-align:left">
+    <a style="color: lightgray" href="http://localhost:8080/admin/homepage"><security:authentication property="principal.company.name"/></a>
+</h3>
 
-<body style="background-color: #3e3e3e; color: white">
 <p>
-<h5>List of employee: </h5>
-</p>
-
-
 <table border="1px">
     <tr>
-        <th> Lp.</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Actions</th>
+        <th colspan="3" style="text-align:center; padding: 10px">Employees</th>
+    </tr>
+    <tr>
+        <th style="min-width:30px"> Lp.</th>
+        <th style="min-width:300px">Name</th>
+        <th style="min-width:150px; text-align: center">Actions</th>
     </tr>
 
     <c:forEach items="${employees}" var="employee" varStatus="stat">
     <tr>
         <td>${stat.count}</td>
-        <td>${employee.firstName}</td>
-        <td>${employee.lastName}</td>
-        <td><a href="http://localhost:8888/admin/employee/show/${employee.id}">Details</a>
-            <a href="http://localhost:8888/admin/employee/edit/${employee.id}">Edit</a>
-            <a href="http://localhost:8888/admin/employee/delete/${employee.id}">Delete</a></td>
+        <td><a style="color: white" href="http://localhost:8080/admin/employee/show/${employee.id}">${employee.firstName} ${employee.lastName}</a>
+               </td>
+        <td style="text-align: center">
+            <a href="http://localhost:8080/admin/employee/edit/${employee.id}">Edit</a>
+            <a href="http://localhost:8080/admin/employee/delete/${employee.id}">Delete</a></td>
     </tr>
 
     </c:forEach>
 
 </table>
+</p>
 <p>
 <form method="get" action="/admin/employee/register">
     <button class="btn" type="submit">Register new employee</button>
 </form>
 </p>
 <br>
-<p>
-<form method="get" action="/admin/homepage">
-    <button class="btn btn-primary" type="submit">Homepage</button>
+<br>
+<form method="get" action="/perform_logout">
+    <button class="btn btn-primary" type="submit">Logout</button>
 </form>
-</p>
+
 
 </body>
 </html>

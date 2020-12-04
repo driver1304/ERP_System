@@ -5,18 +5,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Please register</title>
-    <link href="/css/myStyle.css" rel="stylesheet" type="text/css">
+    <title>Homepage</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
+
 
 </head>
-<body style="background-color: #3e3e3e; color: white">
+<body>
 
 
 <form:form class="form-signin" method="post" modelAttribute="user">
-    <h2 class="form-signin-heading">Register</h2>
+    <h2 style="text-align: center" class="form-signin-heading">Register</h2>
 
 
     <p>
@@ -45,8 +46,10 @@
                     required=""
                     autofocus=""/>
         <form:errors path="company.name" cssClass="validation"/>
+        <form:errors path="company" cssClass="validation"/>
+
     <c:if test="${not empty messageCompany}">
-        <span style="text-align:center">${messageCompany}</span>
+        <span class="validation">${messageCompany}</span>
     </c:if>
     </p>
 

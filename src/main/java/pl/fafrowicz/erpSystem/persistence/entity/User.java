@@ -6,7 +6,7 @@ import pl.fafrowicz.erpSystem.validation.ValidEmail;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Set;
 
@@ -29,14 +29,17 @@ public class User {
     @ManyToOne
     private Company company;
 
+
     @ValidEmail
+    @Size(max = 100)
+    @Column(unique = true)
     private String email;
 
     @NotBlank
     private String password;
 
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     Set<UserTaskHoursBudget> hoursBudgetForTasksList;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)

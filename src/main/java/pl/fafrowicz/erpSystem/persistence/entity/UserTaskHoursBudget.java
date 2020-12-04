@@ -10,21 +10,22 @@ import javax.persistence.*;
 @Setter
 
 @Entity
-@Table(name = "user_task_hoursBudget")
+@Table(name = "user_task_hoursBudget", uniqueConstraints=@UniqueConstraint(columnNames = {"user_id","task_id"}))
 public class UserTaskHoursBudget {
-    @EmbeddedId
-    UserTaskHoursBudgetKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @ManyToOne
-    @MapsId("userId")
     @JoinColumn(name = "user_id")
     User user;
 
     @ManyToOne
-    @MapsId("taskId")
     @JoinColumn(name = "task_id")
     Task task;
 
     private short hoursBudget;
+
+
 
 }
