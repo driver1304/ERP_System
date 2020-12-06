@@ -36,11 +36,9 @@ public class Task {
     private String description;
 
     @NotNull
-    @Future
     private LocalDate startTerm;
 
     @NotNull
-    @Future
     private LocalDate deadline;
 
     @NotNull
