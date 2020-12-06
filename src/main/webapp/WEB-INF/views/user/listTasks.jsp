@@ -15,7 +15,7 @@
 </head>
 <body>
 <h3 style="text-align:left">
-    <a style="color: lightgray" href="http://localhost:8080/admin/homepage"><security:authentication
+    <a style="color: lightgray" href="http://localhost:8080/user/homepage"><security:authentication
             property="principal.company.name"/></a>
 </h3>
 <p>
@@ -25,31 +25,25 @@
 <p>
 <table border="1px">
     <tr>
-        <th colspan="5" style="text-align:center; padding: 10px">Active projects</th>
+        <th colspan="4" style="text-align:center; padding: 10px">Active projects</th>
     </tr>
     <tr>
         <th style="min-width:30px"> Lp.</th>
-        <th style="min-width:330px">Title</th>
+        <th style="min-width:300px">Title</th>
         <th style="min-width:200px; text-align: center">Hours budget for task</th>
         <th style="min-width:150px; text-align: center">Deadline</th>
-        <th style="min-width:150px; text-align: center">Action</th>
     </tr>
 
     <c:forEach items="${userActiveTasks}" var="task" varStatus="stat">
         <tr>
-            <td>${stat.count}</td>
-            <td><a style="color: white" href="http://localhost:8080/admin/task/show/${task.id}">
+            <td style="text-align: center">${stat.count}.</td>
+            <td><a style="color: white" href="http://localhost:8080/user/task/show/${task.id}">
                     ${task.name}</a></td>
             <td style="text-align: center">
                     ${hoursBudgetForUserForTask.get(task.id).hoursBudget}
             </td>
-
             <td style="text-align: center">${task.deadline}</td>
-
-            <td style="text-align: center">
-                <a href="http://localhost:8080/admin/employee/task/delete/${employee.id}/${task.id}">Detach</a>
-            </td>
-        </tr>
+                    </tr>
     </c:forEach>
 </table>
 </p>
@@ -57,20 +51,19 @@
 <p>
 <table border="1px">
     <tr>
-        <th colspan="5" style="text-align:center; padding: 10px">Completed projects</th>
+        <th colspan="4" style="text-align:center; padding: 10px">Completed projects</th>
     </tr>
     <tr>
         <th style="min-width:30px"> Lp.</th>
-        <th style="min-width:330px; text-align: center">Title</th>
+        <th style="min-width:300px">Title</th>
         <th style="min-width:200px; text-align: center">Hours budget for task</th>
         <th style="min-width:150px; text-align: center">Deadline</th>
-
     </tr>
 
     <c:forEach items="${userCompletedTasks}" var="task" varStatus="stat">
         <tr>
-            <td>${stat.count}</td>
-            <td><a style="color: white" href="http://localhost:8080/admin/task/show/${task.id}">
+            <td style="text-align: center">${stat.count}.</td>
+            <td><a style="color: white" href="http://localhost:8080/user/task/show/${task.id}">
                     ${task.name}</a></td>
             <td style="text-align: center">
                     ${hoursBudgetForUserForTask.get(task.id).hoursBudget}
@@ -84,8 +77,8 @@
 <br>
 
 <p>
-<form method="get" action="/admin/employee/">
-    <button class="btn" type="submit">Back to list of Employees</button>
+<form method="get" action="/user/homepage">
+    <button class="btn" type="submit">Back to homepage</button>
 </form>
 </p>
 

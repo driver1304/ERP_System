@@ -51,9 +51,9 @@ public class UserTaskHoursBudgetService {
         return userTaskHoursBudgetRepository.findAllByUser_Id(userId);
     }
 
-    public Map<Long, Short> hoursBudgetPerUserForTask(long taskId) {
+    public Map<Long, UserTaskHoursBudget> hoursBudgetPerUserForTask(long taskId) {
         return findAllByTaskId(taskId).stream()
-                .collect(Collectors.toMap(element -> element.getUser().getId(), UserTaskHoursBudget::getHoursBudget));
+                .collect(Collectors.toMap(element -> element.getUser().getId(), element -> element));
     }
 
     public Integer sumAllowedHoursBudgetForTask(long taskId) {
@@ -69,8 +69,8 @@ public class UserTaskHoursBudgetService {
         return userTaskHoursBudgetRepository.findByUser_IdAndTask_Id(employeeId, taskId);
     }
 
-    public Map<Long, Short> hoursBudgetPerTaskForUser(long userId) {
+    public Map<Long, UserTaskHoursBudget> hoursBudgetPerTaskForUser(long userId) {
         return findAllByUserId(userId).stream()
-                .collect(Collectors.toMap(element -> element.getTask().getId(), UserTaskHoursBudget::getHoursBudget));
+                .collect(Collectors.toMap(element -> element.getTask().getId(), element->element));
     }
 }

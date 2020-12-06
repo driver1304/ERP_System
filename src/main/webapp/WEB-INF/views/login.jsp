@@ -20,12 +20,12 @@
 
         <p>
             <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Username"
-                   autofocus="">
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="true"
+                   autofocus="true">
         </p>
         <p>
             <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true">
         </p>
         <p>
             <c:if test="${not empty param.error}">

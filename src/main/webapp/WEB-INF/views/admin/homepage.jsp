@@ -26,14 +26,14 @@ Hello, <security:authentication property="principal.firstName"/> <security:authe
 </p>
 <br>
 
-
+<div>
 <form method="get" action="/admin/employee/">
-    <button style="display: inline;" class="btn" type="submit">Employees</button>
+    <button  class="btn" type="submit">Employees</button>
 </form>
 <form method="get" action="/admin/task/">
-    <button style="display: inline;" class="btn" type="submit">Tasks</button>
+    <button  class="btn" type="submit">Tasks</button>
 </form>
-
+</div>
 <br>
 <br>
 <br>

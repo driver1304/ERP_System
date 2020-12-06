@@ -30,28 +30,34 @@
 </p>
 
 <p>
-<table border="1px">
+<table border="1px" style="width: 1000px" class="details">
     <tr>
         <th colspan="4" style="text-align:center; padding: 10px">Assigned employees</th>
     </tr>
     <tr>
-        <th style="min-width:30px"> Lp.</th>
-        <th style="min-width:300px">Employee</th>
-        <th style="min-width:200px; text-align: center">Hours budget for task</th>
-
+        <th style="width:30px"> Lp.</th>
+        <th style="width:280px; text-align: center">Employee</th>
+        <th style="width:450px; text-align: center">Description</th>
+        <th style="width:120px; text-align: center">Hours budget for task</th>
     </tr>
 
     <c:forEach items="${allEmployeesForTask}" var="employee" varStatus="stat">
         <tr>
-            <td>${stat.count}</td>
+            <td style="text-align: center">${stat.count}.</td>
             <td><a style="color: white" href="http://localhost:8080/admin/employee/show/${employee.id}">
                     ${employee.firstName} ${employee.lastName}</a></td>
-            <td style="text-align: center">${hoursBudgetForUserForTask.get(employee.id)}</td>
+            <td style="text-align: left; padding-bottom: 5px">
+                        ${hoursBudgetForUserForTask.get(employee.id).description}
+            </td>
+            <td style="text-align: center">
+
+                        ${hoursBudgetForUserForTask.get(employee.id).hoursBudget}
+            </td>
         </tr>
 
     </c:forEach>
-    <tr style="color: lightgray;padding: 5px">
-        <td style="text-align: center" colspan="2">Sum of allocated hours :</td>
+    <tr style="color: lightgray;padding: 8px">
+        <td style="text-align: center" colspan="3">Sum of allocated hours :</td>
         <td style="text-align: center">${sumOfAllocatedHours} / ${task.hoursBudget}</td>
     </tr>
 </table>

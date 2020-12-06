@@ -21,7 +21,7 @@
 
     <p>
         Name:
-        <form:input type="text" class="form-control" maxlength="40" path="name" placeholder="Name"
+        <form:input type="text" class="form-control" maxlength="40" path="name" placeholder="Name" required="true"
                     autofocus="true" />
         <form:errors path="name" cssClass="validation"/>
     </p>
@@ -33,7 +33,7 @@
 
     <p>
         Hours budget:
-        <form:input  type="number" min="1" step="1" class="form-control" path="hoursBudget" value="" placeholder="Hours budget"
+        <form:input  type="number" min="1" step="1" class="form-control" path="hoursBudget" placeholder="Hours budget"
                      required="true"/>
         <form:errors path="hoursBudget" cssClass="validation"/>
     </p>

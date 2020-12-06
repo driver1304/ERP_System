@@ -21,6 +21,9 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private CustomLoginSuccesHandler customLoginSuccesHandler;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -57,8 +60,8 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login.html")
                 .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/admin/homepage", true)
                 .failureUrl("/login.html?error=true")
+                .successHandler(customLoginSuccesHandler)
                 .and()
                 .logout()
                 .logoutUrl("/perform_logout");

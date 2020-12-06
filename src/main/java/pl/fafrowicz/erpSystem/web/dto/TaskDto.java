@@ -21,11 +21,12 @@ public class TaskDto {
     @NotBlank
     private String name;
 
+    @Size(max = 300)
     private String description;
 
-
+    @NotBlank
     private String startTerm;
-
+    @NotBlank
     private String deadline;
 
     @NotNull

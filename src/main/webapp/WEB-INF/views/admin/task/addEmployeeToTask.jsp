@@ -14,38 +14,48 @@
 
 </head>
 <body>
-<form class="form-signin" method="post">
+<form class="form-signin" style="max-width: 650px" method="post">
     <h3 class="form-signin-heading" style="text-align: center">Add employee to task</h3>
+
     <p class="form-signin-heading" style="text-align: center;">
       <span>  ${taskName} </span>
-        <span style="color: lightgray">Hours budget to be allocated:</span> <span style="color: red"> ${hoursBudgetToBeAllocated}</span></p>
-    <table border="1px">
+        <span style="color: lightgray">Hours budget to be allocated:</span> <span style="color: red"> ${hoursBudgetToBeAllocated}</span>
+    </p>
+
+<div style="position: center; text-align: center">
+    <table border="1px" >
+
         <tr>
-            <th style="min-width: 200px; text-align: center">Employee</th>
-            <th width="350" style="text-align: center">Budget hours for employee</th>
+            <th style="width: 200px; text-align: center">Employee</th>
+            <th style="text-align: center; width: 120px">Budget hours for employee</th>
+            <th  style="text-align: center; width: 330px">Description</th>
         </tr>
 
         <c:forEach items="${employeesToAdd}" var="employee" varStatus="stat">
             <tr>
                 <td style="text-align: center">${employee.firstName} ${employee.lastName}</td>
                 <td style="text-align: center">
-                    <input type="number" name="${employee.lastName}" min="0" step="1" class="form-control"
-                           placeholder=""/>
+                    <input style="height: 50px; text-align: center" type="number" name="${employee.id}" min="0" step="1" class="form-control"/>
+                </td>
+                <td style="text-align: center">
+                    <textarea style="height: 50px; text-align: left" name="${employee.id}_desc" class="form-control">
+                    </textarea>
                 </td>
             </tr>
 
         </c:forEach>
     </table>
+</div>
 
     <h5 style="color: red; text-align: center">${param.get('message')}</h5>
-    <p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
-    </p>
+    <div style="text-align: center">
+        <button  class="btn btn-primary" style="width: 200px" type="submit">Save</button>
+    </div>
 
 </form>
 
 <form class="form-signin" method="get" action="/admin/task/show/${taskId}">
-    <button class="btn btn-primary btn-block" type="submit">Back to task details</button>
+    <button class="btn btn-block" style="width: 300px" type="submit">Back to task details</button>
 </form>
 
 </body>

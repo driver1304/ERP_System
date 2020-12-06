@@ -8,7 +8,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class MyUserDetails implements UserDetails {
-        private final String username;
+    private final long id;
+    private final String username;
     private final String firstName;
     private final String lastName;
     private final Company company;
@@ -20,7 +21,8 @@ public class MyUserDetails implements UserDetails {
     private final boolean isEnabled;
 
 
-    public MyUserDetails(String username, String firstName, String lastName, Company company, String password, List<GrantedAuthority> authorities, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
+    public MyUserDetails(long id, String username, String firstName, String lastName, Company company, String password, List<GrantedAuthority> authorities, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
+        this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -78,5 +80,9 @@ public class MyUserDetails implements UserDetails {
 
     public Company getCompany() {
         return company;
+    }
+
+    public long getId() {
+        return id;
     }
 }

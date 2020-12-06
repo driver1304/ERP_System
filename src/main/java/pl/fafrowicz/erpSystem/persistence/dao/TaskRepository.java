@@ -1,6 +1,6 @@
 package pl.fafrowicz.erpSystem.persistence.dao;
 
-import org.hibernate.sql.Select;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import pl.fafrowicz.erpSystem.persistence.entity.Company;
@@ -15,11 +15,16 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Task findByName(String name);
 
 
-    @Query("select t FROM Task t JOIN FETCH t.employeesAndHoursBudgetList ahb WHERE ahb.user = ?1 AND t.completed=false ")
+    @Query("SELECT t FROM Task t JOIN FETCH t.employeesAndHoursBudgetList ahb WHERE ahb.user = ?1 AND t.completed=false ")
     List<Task> findAllActiveByUser(User user);
 
-    @Query("select t FROM Task t JOIN FETCH t.employeesAndHoursBudgetList ahb WHERE ahb.user = ?1 AND t.completed=true ")
+    @Query("SELECT t FROM Task t JOIN FETCH t.employeesAndHoursBudgetList ahb WHERE ahb.user = ?1 AND t.completed=true ")
     List<Task> findAllCompletedByUser(User user);
+
+
+    @Query("SELECT t FROM Task t JOIN FETCH t.employeesAndHoursBudgetList ahb WHERE ahb.user.id = ?1 AND t.completed=false ORDER BY t.deadline ASC ")
+    List<Task> findTopThreeEarliestDeadlineForUserId(long userId, Pageable pegeable);
+
 
     @Override
     void delete(Task task);

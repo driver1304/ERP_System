@@ -11,6 +11,7 @@ import pl.fafrowicz.erpSystem.error.UserAlreadyExistException;
 import pl.fafrowicz.erpSystem.persistence.dao.RoleRepository;
 import pl.fafrowicz.erpSystem.persistence.entity.Task;
 import pl.fafrowicz.erpSystem.persistence.entity.User;
+import pl.fafrowicz.erpSystem.persistence.entity.UserTaskHoursBudget;
 import pl.fafrowicz.erpSystem.persistence.service.TaskService;
 import pl.fafrowicz.erpSystem.persistence.service.UserService;
 import pl.fafrowicz.erpSystem.persistence.service.UserTaskHoursBudgetService;
@@ -81,7 +82,7 @@ public class EmployeeController {
         List<Task> userActiveTasks = taskService.findAllActiveForUser(user);
         List<Task> userCompletedTasks = taskService.findAllCompletedForUser(user);
 
-        Map<Long, Short> hoursBudgetForUserForTask = userTaskHoursBudgetService.hoursBudgetPerTaskForUser(id);
+        Map<Long, UserTaskHoursBudget> hoursBudgetForUserForTask = userTaskHoursBudgetService.hoursBudgetPerTaskForUser(id);
         model.addAttribute("hoursBudgetForUserForTask", hoursBudgetForUserForTask);
 
         model.addAttribute("userActiveTasks", userActiveTasks);

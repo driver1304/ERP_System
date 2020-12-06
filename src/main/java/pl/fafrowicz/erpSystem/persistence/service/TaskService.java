@@ -1,5 +1,6 @@
 package pl.fafrowicz.erpSystem.persistence.service;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.fafrowicz.erpSystem.error.TaskAlreadyExistException;
@@ -109,5 +110,9 @@ public class TaskService {
             task.setCompleted(false);
             taskRepository.save(task);
         }
+    }
+
+    public List<Task> findTopThreeEarliestDeadlineForUserId(long userId) {
+        return taskRepository.findTopThreeEarliestDeadlineForUserId(userId, PageRequest.of(0, 3));
     }
 }

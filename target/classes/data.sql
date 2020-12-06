@@ -23,12 +23,18 @@ insert into users_roles(user_id, role_id) values (6, 2);
 insert into users_roles(user_id, role_id) values (7, 2);
 
 
-insert into tasks(name, description, hours_budget, start_term, deadline, completed,company_id) values ('Projekt budowlany domek jednorodzinny', 'Description1', 100, '2020-10-10', '2020-12-24', false,1);
-insert into tasks(name, description, hours_budget, start_term, deadline, completed,company_id) values ('Projekt budowlany bud. użyt. publicznej', 'Description2', 200, '2020-11-10', '2020-12-28', true,1);
-insert into tasks(name, description, hours_budget, start_term, deadline, completed,company_id) values ('Projekt wykonawczy bud. jednorodzinnych', 'Description3', 200, '2020-11-10', '2020-12-28', true,2);
+insert into tasks(name, description, hours_budget, start_term, deadline, completed,company_id) values ('Projekt budowlany domek jednorodzinny', 'Wykonać projekt budlowany instalacji sanitarnych. Lokalizacja: ul. Długa 2, Kraków.', 100, '2020-10-10', '2020-12-24', false,1);
+insert into tasks(name, description, hours_budget, start_term, deadline, completed,company_id) values ('Projekt budowlany bud. użyt. publicznej', 'Wykonać projekt budlowany instalacji went-klim. Lokalizacja: ul. Krótka 12, Kraków.', 200, '2020-11-10', '2020-12-28', true,1);
+insert into tasks(name, description, hours_budget, start_term, deadline, completed,company_id) values ('Projekt wykonawczy bud. jednorodzinnych', 'Wykonać projekt wykonawczy instalacji sanitarnych dla osiedla domków jednorodzinnych. Lokalizacja: ul. os. Podwawelskie 42, Kraków.', 200, '2020-11-10', '2020-12-28', true,2);
+insert into tasks(name, description, hours_budget, start_term, deadline, completed,company_id) values ('Projekt wykonawczy domek jednorodzinny', 'Wykonać projekt budlowany instalacji sanitarnych. Lokalizacja: ul. Długa 2, Kraków.', 200, '2020-10-10', '2020-12-31', false,1);
+insert into tasks(name, description, hours_budget, start_term, deadline, completed,company_id) values ('Projekt budowalny sieć wodociągowa', 'Wykonać projekt budlowany sieci wod. dla dz. Dębniki w Krakowie.', 200, '2021-01-05', '2021-03-31', false,1);
+insert into tasks(name, description, hours_budget, start_term, deadline, completed,company_id) values ('Projekt wykonawczy sieć wodociągowa', 'Wykonać projekt wykonawczy sieci wod. dla dz. Dębniki w Krakowie.', 250, '2021-04-10', '2021-08-20', false,1);
 
-insert into user_task_hours_budget(user_id, task_id,hours_budget) values (3, 1, 30);
-insert into user_task_hours_budget(user_id, task_id,hours_budget) values (3, 2, 45);
-insert into user_task_hours_budget(user_id, task_id,hours_budget) values (6, 1, 10);
-insert into user_task_hours_budget(user_id, task_id,hours_budget) values (7, 2, 10);
-insert into user_task_hours_budget(user_id, task_id,hours_budget) values (4, 3, 40);
+insert into user_task_hours_budget(user_id, task_id,hours_budget, description) values (3, 1, 30, 'Wykonać projekt instalacji kanalizacyjnej.' );
+insert into user_task_hours_budget(user_id, task_id,hours_budget,description) values (3, 4, 50, 'Wykonać projekt instalacji kanalizacyjnej.');
+insert into user_task_hours_budget(user_id, task_id,hours_budget,description) values (3, 5, 60, 'Wykonać projekt bud. sieci wociągowej.');
+insert into user_task_hours_budget(user_id, task_id,hours_budget,description) values (3, 6, 65, 'Wykonać projekt wyk. oraz prowadzić nadzory.');
+insert into user_task_hours_budget(user_id, task_id,hours_budget,description) values (3, 2, 45, 'Wykonać projekt instalacji wentylacyjnej.');
+insert into user_task_hours_budget(user_id, task_id,hours_budget,description) values (6, 1, 10,'Wykonać projekt instalacji wodociągowej.');
+insert into user_task_hours_budget(user_id, task_id,hours_budget,description) values (7, 2, 10, 'Wykonać projekt instalacji klimatyzacyjnej.');
+insert into user_task_hours_budget(user_id, task_id,hours_budget,description) values (4, 3, 40, 'Wykonać projekt instalacji kanalizacyjnej.');

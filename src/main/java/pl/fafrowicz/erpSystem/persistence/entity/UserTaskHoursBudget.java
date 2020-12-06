@@ -5,12 +5,14 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 
 @Entity
-@Table(name = "user_task_hoursBudget", uniqueConstraints=@UniqueConstraint(columnNames = {"user_id","task_id"}))
+@Table(name = "user_task_hoursBudget", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "task_id"}))
 public class UserTaskHoursBudget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +26,10 @@ public class UserTaskHoursBudget {
     @JoinColumn(name = "task_id")
     Task task;
 
+    @Min(1)
     private short hoursBudget;
 
+    private String description;
 
 
 }

@@ -44,6 +44,7 @@
     <form:hidden path="user"/>
     <form:hidden path="task"/>
     <form:hidden path="id"/>
+    <form:hidden path="description"/>
     <p>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
     </p>

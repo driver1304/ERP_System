@@ -34,6 +34,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
         return new MyUserDetails(
+                user.getId(),
                 user.getEmail(),
                 user.getFirstName(),
                 user.getLastName(),

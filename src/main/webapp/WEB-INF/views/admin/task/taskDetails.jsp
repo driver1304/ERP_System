@@ -9,7 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
 
 
 </head>
@@ -30,33 +30,38 @@
 </p>
 
 <p>
-<table border="1px">
+<table border="1px" style="width: 1000px" class="details">
     <tr>
-        <th colspan="4" style="text-align:center; padding: 10px">Assigned employees</th>
+        <th colspan="5" style="text-align:center; padding: 10px">Assigned employees</th>
     </tr>
     <tr>
-        <th style="min-width:30px"> Lp.</th>
-        <th style="min-width:300px">Employee</th>
-        <th style="min-width:200px; text-align: center">Hours budget for task</th>
-        <th style="min-width:200px; text-align: center">Actions</th>
+        <th style="width:30px"> Lp.</th>
+        <th style="width:280px; text-align: center">Employee</th>
+        <th style="width:450px; text-align: center">Description</th>
+        <th style="width:120px; text-align: center">Hours budget for task</th>
+        <th style="width:120px; text-align: center">Actions</th>
     </tr>
 
     <c:forEach items="${allEmployeesForTask}" var="employee" varStatus="stat">
         <tr>
-            <td>${stat.count}</td>
+            <td style="text-align: center">${stat.count}.</td>
             <td><a style="color: white" href="http://localhost:8080/admin/employee/show/${employee.id}">
                     ${employee.firstName} ${employee.lastName}</a></td>
+            <td style="text-align: left; padding-bottom: 5px">
+                <a style="color: white" href="http://localhost:8080/admin/task/employee/editDesc/${task.id}/${employee.id}">
+                        ${hoursBudgetForUserForTask.get(employee.id).description}</a>
+            </td>
             <td style="text-align: center">
-                <a style="color: white" href="http://localhost:8080/admin/task/employee/edit/${task.id}/${employee.id}">
-                        ${hoursBudgetForUserForTask.get(employee.id)}</a>
-                    </td>
+                <a style="color: white" href="http://localhost:8080/admin/task/employee/editHours/${task.id}/${employee.id}">
+                        ${hoursBudgetForUserForTask.get(employee.id).hoursBudget}</a>
+            </td>
             <td style="text-align: center">
                 <a href="http://localhost:8080/admin/task/employee/delete/${task.id}/${employee.id}">Detach</a></td>
         </tr>
 
     </c:forEach>
-    <tr style="color: lightgray;padding: 5px">
-        <td style="text-align: center" colspan="2">Sum of allocated hours :</td>
+    <tr style="color: lightgray;padding: 8px">
+        <td style="text-align: center" colspan="3">Sum of allocated hours :</td>
         <td style="text-align: center">${sumOfAllocatedHours} / ${task.hoursBudget}</td>
     </tr>
 </table>

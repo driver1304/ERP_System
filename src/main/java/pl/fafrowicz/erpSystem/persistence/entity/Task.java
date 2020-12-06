@@ -33,13 +33,14 @@ public class Task {
 
     @ManyToOne
     private Company company;
-
+    @Size(max = 300)
     private String description;
 
-
+    @NotNull
     private LocalDate startTerm;
-
+    @NotNull
     private LocalDate deadline;
+
     @NotNull
     private short hoursBudget;
     private boolean completed = false;

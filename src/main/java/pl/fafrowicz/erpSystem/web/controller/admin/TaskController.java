@@ -1,4 +1,4 @@
-package pl.fafrowicz.erpSystem.web.controller.user;
+package pl.fafrowicz.erpSystem.web.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,7 +42,7 @@ public class TaskController {
 
 
     @GetMapping("")
-    public String tasksList(@AuthenticationPrincipal MyUserDetails user,Model model) {
+    public String tasksList(@AuthenticationPrincipal MyUserDetails user, Model model) {
         List<Task> activeTasks = this.taskService.findAllActiveTasks(user.getCompany());
         List<Task> completedTasks = this.taskService.findAllCompletedTasks(user.getCompany());
         model.addAttribute("activeTasks", activeTasks);
@@ -130,7 +130,7 @@ public class TaskController {
     public String showDetails(@PathVariable long id, Model model, @AuthenticationPrincipal MyUserDetails adminUser) {
         Task task = taskService.findByIdAndCompany(id, adminUser.getCompany()).get();
         List<User> allEmployeesForTask = userService.findAllForTask(task.getId(), adminUser.getCompany());
-        Map<Long, Short> hoursBudgetForUserForTask = userTaskHoursBudgetService.hoursBudgetPerUserForTask(id);
+        Map<Long, UserTaskHoursBudget> hoursBudgetForUserForTask = userTaskHoursBudgetService.hoursBudgetPerUserForTask(id);
         int sumOfAllocatedHours = userTaskHoursBudgetService.sumAllowedHoursBudgetForTask(id);
 
         model.addAttribute("sumOfAllocatedHours", sumOfAllocatedHours);
@@ -179,7 +179,7 @@ public class TaskController {
 
         for (User employee : employeesToAdd) {
             try {
-                sum += Short.parseShort(req.getParameter(employee.getLastName()));
+                sum += Short.parseShort(req.getParameter(String.valueOf(employee.getId())));
             } catch (NumberFormatException e) {
                 continue;
             }
@@ -192,12 +192,13 @@ public class TaskController {
 
         for (User employee : employeesToAdd) {
             try {
-                short budgetHour = Short.parseShort(req.getParameter(employee.getLastName()));
+                short budgetHour = Short.parseShort(req.getParameter(String.valueOf(employee.getId())));
                 if (budgetHour > 0 && budgetHour <= Short.MAX_VALUE) {
                     UserTaskHoursBudget userTaskHoursBudget = new UserTaskHoursBudget();
                     userTaskHoursBudget.setUser(employee);
                     userTaskHoursBudget.setTask(task);
                     userTaskHoursBudget.setHoursBudget(budgetHour);
+                    userTaskHoursBudget.setDescription(req.getParameter(employee.getId() + "_desc"));
                     userTaskHoursBudgetService.save(userTaskHoursBudget);
                 }
             } catch (NumberFormatException e) {
@@ -208,7 +209,7 @@ public class TaskController {
     }
 
 
-    @GetMapping("employee/edit/{taskId}/{employeeId}")
+    @GetMapping("employee/editHours/{taskId}/{employeeId}")
     public String editEmployeeHoursBudgetForTask(Model model, @PathVariable long taskId, @PathVariable long employeeId) {
         UserTaskHoursBudget userTaskHoursBudget = userTaskHoursBudgetService.findByUserAndTask(employeeId, taskId);
         int hoursBudgetToBeAllocated = userTaskHoursBudget.getTask().getHoursBudget() - userTaskHoursBudgetService.sumAllowedHoursBudgetForTask(taskId);
@@ -218,10 +219,28 @@ public class TaskController {
         return "admin/task/editEmployeeHoursBudgetForTask";
     }
 
-    @PostMapping("employee/edit/{taskId}/{employeeId}")
+
+
+    @PostMapping("employee/editHours/{taskId}/{employeeId}")
     public String editEmployeeHoursBudgetForTaskPost(@PathVariable long taskId, @ModelAttribute("userTaskHoursBudget") UserTaskHoursBudget userTaskHoursBudget, BindingResult result) {
         if (result.hasErrors()) {
             return "admin/task/editEmployeeHoursBudgetForTask";
+        }
+        userTaskHoursBudgetService.save(userTaskHoursBudget);
+        return "redirect:/admin/task/show/" + taskId;
+    }
+
+    @GetMapping("employee/editDesc/{taskId}/{employeeId}")
+    public String editEmployeeDescriptionForTask(Model model, @PathVariable long taskId, @PathVariable long employeeId) {
+        UserTaskHoursBudget userTaskHoursBudget = userTaskHoursBudgetService.findByUserAndTask(employeeId, taskId);
+        model.addAttribute("userTaskHoursBudget", userTaskHoursBudget);
+        return "admin/task/editEmployeeDescriptionForTask";
+    }
+
+    @PostMapping("employee/editDesc/{taskId}/{employeeId}")
+    public String editEmployeeDescriptionForTaskPost(@PathVariable long taskId, @ModelAttribute("userTaskHoursBudget") UserTaskHoursBudget userTaskHoursBudget, BindingResult result) {
+        if (result.hasErrors()) {
+            return "admin/task/editEmployeeDescriptionForTask";
         }
         userTaskHoursBudgetService.save(userTaskHoursBudget);
         return "redirect:/admin/task/show/" + taskId;

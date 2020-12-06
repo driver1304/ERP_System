@@ -22,28 +22,25 @@
 
     <p>
         <label for="firstName" class="sr-only">First name: </label>
-        <form:input type="text" class="form-control" maxlength="100" path="firstName" placeholder="First name"
-                    required=""
-                    autofocus=""/>
+        <form:input type="text" class="form-control" maxlength="40" path="firstName" placeholder="First name"
+                    required="true"
+                    autofocus="true"/>
         <form:errors path="firstName" cssClass="validation"/>
     </p>
     <p>
         <label for="lastName" class="sr-only">Last name: </label>
-        <form:input type="text" class="form-control" maxlength="100" path="lastName" placeholder="Last name" required=""
-                    autofocus=""/>
+        <form:input type="text" class="form-control" maxlength="40" path="lastName" placeholder="Last name" required="true"/>
         <form:errors path="lastName" cssClass="validation"/>
     </p>
     <p>
         <label for="email" class="sr-only">Email: </label>
         <form:input type="email" class="form-control" maxlength="100" path="email" placeholder="Email address"
-                    required=""
-                    autofocus=""/>
+                    required="true"/>
         <form:errors path="email" cssClass="validation"/>
     </p>
     <p>
         <label for="password" class="sr-only">Password: </label>
-        <form:input type="password" class="form-control" path="password" placeholder="Password" required=""
-                    autofocus=""/>
+        <form:input type="password" class="form-control" path="password" placeholder="Password" required="true"/>
         <form:errors path="password" cssClass="validation"/>
     </p>
 
