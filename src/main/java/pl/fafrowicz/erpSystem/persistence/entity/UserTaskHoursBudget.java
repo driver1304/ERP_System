@@ -2,6 +2,7 @@ package pl.fafrowicz.erpSystem.persistence.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 
 
 import javax.persistence.*;
@@ -26,7 +27,7 @@ public class UserTaskHoursBudget {
     @JoinColumn(name = "task_id")
     Task task;
 
-    @Min(1)
+    @Range(min = 1, max = Short.MAX_VALUE)
     private short hoursBudget;
 
     private String description;

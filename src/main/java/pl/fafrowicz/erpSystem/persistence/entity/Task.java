@@ -2,12 +2,11 @@ package pl.fafrowicz.erpSystem.persistence.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 import pl.fafrowicz.erpSystem.web.dto.TaskDto;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -37,11 +36,15 @@ public class Task {
     private String description;
 
     @NotNull
+    @Future
     private LocalDate startTerm;
+
     @NotNull
+    @Future
     private LocalDate deadline;
 
     @NotNull
+    @Range(min = 1, max = Short.MAX_VALUE)
     private short hoursBudget;
     private boolean completed = false;
 

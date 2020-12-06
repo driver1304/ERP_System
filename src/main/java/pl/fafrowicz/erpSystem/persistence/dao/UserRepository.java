@@ -2,13 +2,9 @@ package pl.fafrowicz.erpSystem.persistence.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import pl.fafrowicz.erpSystem.persistence.entity.Company;
-import pl.fafrowicz.erpSystem.persistence.entity.Role;
-import pl.fafrowicz.erpSystem.persistence.entity.Task;
 import pl.fafrowicz.erpSystem.persistence.entity.User;
 
-import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 
