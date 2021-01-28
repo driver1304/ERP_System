@@ -1,5 +1,5 @@
 # ERP_system
-An application supporting the management of enterprice resources. It allows you to manage employees and tasks from the administrator (employer) level and if you employee, check assigned you responsibilities.
+An application supporting the management of enterprice resources. It allows you to manage employees and tasks from the administrator (employer) level and if you employee, check the duties assigned to you.
 
 ## Employer
 After registration your company and log in as an administrator you can:
