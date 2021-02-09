@@ -2,7 +2,7 @@
 An application supporting the management of enterprice resources. It allows you to manage employees and tasks from the administrator (employer) level and if you are an employee, check the duties assigned to you.
 
 ## Employer
-After registration your company and logging in as an administrator, you can:
+After registering your company and logging in as an administrator, you can:
 * register your employees (after this you must send login data to individual employees),
 * manage your employees (assign/detach from tasks, edit their data or delete them),
 * manage your tasks (create, edit, including changing the status: active/completed and delete an tasks), 
